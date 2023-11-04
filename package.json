@@ -1,0 +1,16 @@
+
+{
+  "name": "my-api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'Building...' && npm install"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "body-parser": "^1.19.0",
+    "sqlite3": "^5.0.2",
+    "cors": "^2.8.5"
+  }
+}
