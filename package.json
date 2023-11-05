@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'Building...' && npm install"
+    "build": "echo 'Building...' && npm install && npm start"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
