@@ -1,7 +1,8 @@
-
 {
-    "version": 2,
-    "builds": [{ "src": "server.js", "use": "@now/node" }],
-    "public": true
+    "builds": [{ "src": "server.js", "use": "@vercel/node" }],
+    "routes": [{ "src": "/api/.*", "dest": "/server.js" }],
+    "env": {
+      "DATABASE_URL": "postgres://postgres:1CCf63d-c25c3dgff1Cab6F2A5*C5cFC@roundhouse.proxy.rlwy.net:38917/railway"
+    }
   }
   
