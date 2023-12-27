@@ -41,6 +41,15 @@ async function initDatabase() {
 
     const tableLastTokenExists = resultLastToken.rows[0].exists;
 
+    const resultUserRegistration = await client.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables
+        WHERE table_name = 'userregistration'
+      );
+    `);
+
+    const tableUserRegistrationExists = resultUserRegistration.rows[0].exists;
+
     if (!tableLastTokenExists) {
       // Create the LastToken table if it does not exist
       await client.query(`
@@ -56,15 +65,6 @@ async function initDatabase() {
 
       console.log('LastToken table created');
     }
-
-    const resultUserRegistration = await client.query(`
-      SELECT EXISTS (
-        SELECT FROM information_schema.tables
-        WHERE table_name = 'userregistration'
-      );
-    `);
-
-    const tableUserRegistrationExists = resultUserRegistration.rows[0].exists;
 
     if (!tableUserRegistrationExists) {
       // Create the userregistration table if it does not exist
