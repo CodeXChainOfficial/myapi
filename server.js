@@ -30,20 +30,18 @@ async function connectToDatabase() {
 }
 
 connectToDatabase();
-
-// Check if the LastToken table exists and create it if not
 async function initDatabase() {
   try {
-    const result = await client.query(`
+    const resultLastToken = await client.query(`
       SELECT EXISTS (
         SELECT FROM information_schema.tables
         WHERE table_name = 'LastToken'
       );
     `);
 
-    const tableExists = result.rows[0].exists;
+    const tableLastTokenExists = resultLastToken.rows[0].exists;
 
-    if (!tableExists) {
+    if (!tableLastTokenExists) {
       // Create the LastToken table if it does not exist
       await client.query(`
         CREATE TABLE LastToken (
@@ -59,16 +57,16 @@ async function initDatabase() {
       console.log('LastToken table created');
     }
 
-const result = await client.query(`
+    const resultUserRegistration = await client.query(`
       SELECT EXISTS (
         SELECT FROM information_schema.tables
         WHERE table_name = 'UserRegistration'
       );
     `);
 
-    const tableExists = result.rows[0].exists;
+    const tableUserRegistrationExists = resultUserRegistration.rows[0].exists;
 
-    if (!tableExists) {
+    if (!tableUserRegistrationExists) {
       // Create the UserRegistration table if it does not exist
       await client.query(`
         CREATE TABLE UserRegistration (
@@ -82,13 +80,10 @@ const result = await client.query(`
 
       console.log('UserRegistration table created');
     }
-  
-    
   } catch (error) {
     console.error('Error initializing database:', error);
   }
 }
-
 initDatabase();
 
 // API endpoint to save deployed tokens
