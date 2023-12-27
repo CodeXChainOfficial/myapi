@@ -69,7 +69,7 @@ async function initDatabase() {
     if (!tableUserRegistrationExists) {
       // Create the UserRegistration table if it does not exist
       await client.query(`
-        CREATE TABLE UserRegistration (
+        CREATE TABLE userregistration  (
           id SERIAL PRIMARY KEY,
           email TEXT,
           referralCode TEXT,
