@@ -156,7 +156,7 @@ app.post('/api/register', async (req, res) => {
 
   try {
     const result = await client.query(`
-      INSERT INTO UserRegistration (email, referralCode, productName)
+      INSERT INTO userregistration (email, referralCode, productName)
       VALUES ($1, $2, $3)
       RETURNING *;
     `, [email, referralCode, productName]);
@@ -172,7 +172,7 @@ app.post('/api/register', async (req, res) => {
 // API endpoint to get all registered users
 app.get('/api/getRegisteredUsers', async (req, res) => {
   try {
-    const result = await client.query('SELECT * FROM UserRegistration');
+    const result = await client.query('SELECT * FROM userregistration');
     const registeredUsers = result.rows;
 
     res.json({ success: true, registeredUsers });
