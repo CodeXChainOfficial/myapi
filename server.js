@@ -60,16 +60,16 @@ async function initDatabase() {
     const resultUserRegistration = await client.query(`
       SELECT EXISTS (
         SELECT FROM information_schema.tables
-        WHERE table_name = 'UserRegistration'
+        WHERE table_name = 'userregistration'
       );
     `);
 
     const tableUserRegistrationExists = resultUserRegistration.rows[0].exists;
 
     if (!tableUserRegistrationExists) {
-      // Create the UserRegistration table if it does not exist
+      // Create the userregistration table if it does not exist
       await client.query(`
-        CREATE TABLE userregistration  (
+        CREATE TABLE userregistration (
           id SERIAL PRIMARY KEY,
           email TEXT,
           referralCode TEXT,
@@ -78,7 +78,7 @@ async function initDatabase() {
         );
       `);
 
-      console.log('UserRegistration table created');
+      console.log('userregistration table created');
     }
   } catch (error) {
     console.error('Error initializing database:', error);
