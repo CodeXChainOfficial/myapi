@@ -58,6 +58,32 @@ async function initDatabase() {
 
       console.log('LastToken table created');
     }
+
+const result = await client.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables
+        WHERE table_name = 'UserRegistration'
+      );
+    `);
+
+    const tableExists = result.rows[0].exists;
+
+    if (!tableExists) {
+      // Create the UserRegistration table if it does not exist
+      await client.query(`
+        CREATE TABLE UserRegistration (
+          id SERIAL PRIMARY KEY,
+          email TEXT,
+          referralCode TEXT,
+          productName TEXT,
+          createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `);
+
+      console.log('UserRegistration table created');
+    }
+  
+    
   } catch (error) {
     console.error('Error initializing database:', error);
   }
