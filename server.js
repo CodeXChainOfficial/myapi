@@ -155,6 +155,38 @@ app.get('/api/getDeployedTokens', async (req, res) => {
 });
 
 
+app.post('/api/register', async (req, res) => {
+  const { email, referralCode, productName } = req.body;
+  console.log('Received request at post /api/register');
+
+  try {
+    const result = await client.query(`
+      INSERT INTO UserRegistration (email, referralCode, productName)
+      VALUES ($1, $2, $3)
+      RETURNING *;
+    `, [email, referralCode, productName]);
+
+    const registeredUser = result.rows[0];
+    res.json({ success: true, message: 'User registered successfully.', user: registeredUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error registering user.' });
+  }
+});
+
+// API endpoint to get all registered users
+app.get('/api/getRegisteredUsers', async (req, res) => {
+  try {
+    const result = await client.query('SELECT * FROM UserRegistration');
+    const registeredUsers = result.rows;
+
+    res.json({ success: true, registeredUsers });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error fetching registered users.' });
+  }
+});
+
 app.get('/api/getDeployedTokensCount', async (req, res) => {
   try {
     const result = await client.query('SELECT COUNT(*) as count FROM LastToken');
